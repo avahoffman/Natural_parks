@@ -1,0 +1,136 @@
+<!-- A really basic homepage. -->
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>National Perks</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/creative.min.css" rel="stylesheet">
+
+  </head>
+  
+  <body id="page-top">
+  
+      <!-- Main search -->
+
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Your National Park Experience</strong>
+            </h1>
+            <hr>
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <p class="text-faded mb-5">Optimize to avoid crowds and under the best conditions</p>
+          </div>
+        </div>
+      </div>
+    </header>
+        
+    <section class="bg-primary" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+          
+          <p class="text-faded mb-5"> 
+           <form action='/results', method='POST'>
+			<select name="location" id="location" class="selectpicker form-control">
+      <option selected="selected" value = ''>Select Park</option>
+      <option value="Acadia NP">Acadia NP</option>
+      <option value="Arches NP">Arches NP</option>
+      <option value="Badlands NP">Badlands NP</option>
+      <option value="Big Bend NP">Big Bend NP</option>
+      <option value="Biscayne NP">Biscayne NP</option>
+      <option value="Black Canyon of the Gunnison NP">Black Canyon of the Gunnison NP</option>
+      <option value="Bryce Canyon NP">Bryce Canyon NP</option>
+      <option value="Canyonlands NP">Canyonlands NP</option>
+      <option value="Capitol Reef NP">Capitol Reef NP</option>
+      <option value="Carlsbad Caverns NP">Carlsbad Caverns NP</option>
+      <option value="Channel Islands NP ">Channel Islands NP</option>
+      <option value="Congaree NP">Congaree NP</option>
+      <option value="Crater Lake NP">Crater Lake NP</option>
+      <option value="Cuyahoga Valley NP">Cuyahoga Valley NP</option>
+      <option value="Death Valley NP">Death Valley NP</option>
+      <option value="Dry Tortugas NP">Dry Tortugas NP</option>
+      <option value="Everglades NP">Everglades NP</option>
+      <option value="Gateway Arch NP">Gateway Arch NP</option>
+      <option value="Glacier NP">Glacier NP</option>
+      <option value="Grand Canyon NP">Grand Canyon NP</option>
+      <option value="Grand Teton NP">Grand Teton NP</option>
+      <option value="Great Basin NP">Great Basin NP</option>
+      <option value="Great Sand Dunes NP & PRES">Great Sand Dunes NP & PRES</option>
+      <option value="Great Smoky Mountains NP">Great Smoky Mountains NP</option>
+      <option value="Guadalupe Mountains NP">Guadalupe Mountains NP</option>
+      <option value="Hot Springs NP">Hot Springs NP</option>
+      <option value="Isle Royale NP">Isle Royale NP</option>
+      <option value="Joshua Tree NP">Joshua Tree NP</option>
+      <option value="Kings Canyon NP">Kings Canyon NP</option>
+      <option value="Lassen Volcanic NP">Lassen Volcanic NP</option>
+      <option value="Mammoth Cave NP">Mammoth Cave NP</option>
+      <option value="Mesa Verde NP">Mount Rainier NP</option>
+      <option value="North Cascades NP">North Cascades NP</option>
+      <option value="Olympic NP">Olympic NP</option>
+      <option value="Petrified Forest NP">Petrified Forest NP</option>
+      <option value="Pinnacles NP">Pinnacles NP</option>
+      <option value="Redwood NP">Redwood NP</option>
+      <option value="Rocky Mountain NP">Rocky Mountain NP</option>
+      <option value="Saguaro NP">Saguaro NP</option>
+      <option value="Sequoia NP">Sequoia NP</option>
+      <option value="Shenandoah NP">Shenandoah NP</option>
+      <option value="Theodore Roosevelt NP">Theodore Roosevelt NP</option>
+      <option value="Voyageurs NP">Voyageurs NP</option>
+      <option value="Wind Cave NP">Wind Cave NP</option>
+      <option value="Yellowstone NP">Yellowstone NP</option>
+      <option value="Yosemite NP">Yosemite NP</option>
+      <option value="Zion NP">Zion NP</option>
+  				</select>
+  				
+  				<br><hr class="light my-4"><br>
+		
+			<p class="text-faded mb-4">How hot is too hot (F) ?</p>
+    		<input class="input" type="number" name="temp_input">
+  			</p>
+            <hr class="light my-4">
+            
+            <br><br>
+            <button class="btn btn-primary btn-xl js-scroll-trigger" type="submit">When should I visit?</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="static/vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="static/js/creative.min.js"></script>
+
+  </body>
+</html>
