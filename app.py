@@ -3,8 +3,6 @@ from flask import Flask, request, render_template
 # essential for model, etc
 import pandas as pd
 from datetime import datetime, timedelta
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 import fbprophet
 
 app = Flask(__name__)
