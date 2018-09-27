@@ -10,7 +10,11 @@ log in to heroku
 
 Check heroku apps running with    
 
-    heroku ps  
+    heroku ps 
+    
+Check logs  
+    
+    heroku logs --tail
     
 Killing web app dynos while troubleshooting deployment can be achieved with  
 
