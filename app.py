@@ -1,9 +1,14 @@
 # essential for interface
+# https://gist.github.com/ericbarnhill/251df20105991674c701d33d65437a50
 from flask import Flask, request, render_template
 # essential for model, etc
+from get_parkdat import get_parkdat
+from do_timeseries import do_timeseries
+from make_yeartrendplot import make_yeartrendplot
 import pandas as pd
 from datetime import datetime, timedelta
-import fbprophet
+import io
+import base64
 
 app = Flask(__name__)
 
@@ -15,52 +20,48 @@ def index():
 
 @app.route('/results', methods=['GET','POST'])
 def results():
-	# read data
-	NP = pd.read_csv("Visits_NP_NoAKHI.csv", low_memory=False)
-	#
-	#
 	# user inputs
 	SELECTED_PARK = request.form['location']
 	#SELECTED_PARK = str(PARK.upper())
-	SELECTED_TEMP = int(request.form['temp_input'])
+	SELECTED_MAXTEMP = int(request.form['max_temp_input'])
+	SELECTED_MINTEMP = int(request.form['min_temp_input'])
 	# subset main data
-	NP_sub = NP[NP['ParkName'] == SELECTED_PARK ]
+	#NP_sub = NP[NP['ParkName'] == SELECTED_PARK ]
+	NP_sub = get_parkdat(SELECTED_PARK)
 	NP_sub['mergedate'] = pd.to_datetime(NP_sub.assign(Day=1).loc[:, ['Year','Month','Day']])
 	#
-	# prophet modeling# 
-	combined_vals = NP_sub.rename(columns={'mergedate': 'ds', 'RecreationVisits': 'y'})
-	data_prophet = fbprophet.Prophet(changepoint_prior_scale=0.05, daily_seasonality=False, weekly_seasonality=False)
-	data_prophet.fit(combined_vals)
-	data_forecast = data_prophet.make_future_dataframe(periods=12 * 3, freq='M')
-	data_forecast = data_prophet.predict(data_forecast)
-	# temperature
-	combined_temp = NP_sub.rename(columns={'mergedate': 'ds', 'MaxT': 'y'})
-	data_prophet_temp = fbprophet.Prophet(changepoint_prior_scale=0.05, daily_seasonality=False, weekly_seasonality=False)
-	data_prophet_temp.fit(combined_temp)
-	data_forecast_temp = data_prophet_temp.make_future_dataframe(periods=12 * 3, freq='M')
-	data_forecast_temp = data_prophet_temp.predict(data_forecast_temp)
-	# cleaning
-	predicted_vals = data_forecast.drop(data_forecast.index[:len(data_forecast)-36])
-	predicted_vals = predicted_vals.loc[:,['ds','yhat']]
-	predicted_vals['date'] = predicted_vals['ds'].apply(lambda x: x + timedelta(days=1))
-	predicted_vals_temp = data_forecast_temp.drop(data_forecast_temp.index[:len(data_forecast_temp)-36])
-	predicted_vals_temp = predicted_vals_temp.loc[:,['ds','yhat']]
-	result_vals = pd.merge(predicted_vals, predicted_vals_temp, on='ds')
-	result_vals['month'] = result_vals['date'].apply(lambda x: x.strftime('%B'))
-	result_vals['year'] = result_vals['date'].apply(lambda x: x.strftime('%Y'))
+	# make the yearly trend plot
+	plotscript = []
+	plotdiv = []
+	plotscript, plotdiv = make_yeartrendplot(NP_sub)
+	#
+	# prophet modeling for visitors # 
+	result_vals = do_timeseries(NP_sub)
 	#
 	#filter by user pref
-	result_vals = result_vals.drop(result_vals[result_vals['yhat_y'] < SELECTED_TEMP ].index)
+	result_vals = result_vals.drop(result_vals[result_vals['yhat_y'] > SELECTED_MAXTEMP ].index)
+	result_vals = result_vals.drop(result_vals[result_vals['yhat'] < SELECTED_MINTEMP ].index)
+	# remove 2018
 	result_vals = result_vals.drop(result_vals[result_vals['date'] < '2018-10-01' ].index)
 	if len(result_vals) > 0:
 		visit_list = result_vals['yhat_x']
 		best = min(visit_list)
 		month_rec = result_vals.loc[result_vals['yhat_x'] == best, 'month'].iloc[0]
 		year_rec = result_vals.loc[result_vals['yhat_x'] == best, 'year'].iloc[0]
+		actual_min = round(result_vals.loc[result_vals['yhat_x'] == best, 'yhat'].iloc[0], 2)
+		actual_max = round(result_vals.loc[result_vals['yhat_x'] == best, 'yhat_y'].iloc[0], 2)
+		MESSAGE = "We recommend visiting "+str(SELECTED_PARK)+" in "+month_rec+" of "+str(year_rec)+" to avoid the crowds."
+		MESSAGE_2 = "At this time, the minimum temperature at "+str(SELECTED_PARK)+" should be "+str(actual_min)+" F and the maximum temperature should be "+str(actual_max)+" F."
+		INPUT_MESSAGE = "Your selected temperature range was "+str(SELECTED_MINTEMP)+" - "+str(SELECTED_MAXTEMP)+" F."
 	else:
-		month_rec = ''
-		year_rec = ''
-	return render_template('results.html', SELECTED_PARK=SELECTED_PARK, SELECTED_TEMP=SELECTED_TEMP, month_rec=month_rec, year_rec=year_rec)
+		month_rec = '---'
+		year_rec = '---'
+		actual_min = '---'
+		actual_max = '---'
+		MESSAGE = 'Your temperature cutoffs are too restrictive. Remember many of these parks get quite cold at night! Please adjust and try again.'
+		MESSAGE_2 = '' 
+		INPUT_MESSAGE = ''
+	return render_template('results.html', MESSAGE=MESSAGE, MESSAGE_2=MESSAGE_2, INPUT_MESSAGE=INPUT_MESSAGE, plotscript = plotscript, plotdiv=plotdiv)
 
 if __name__ == '__main__':
     app.run()
