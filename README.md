@@ -1,13 +1,26 @@
 # National Parks
 
-Make sure to run 
-	Python app.py
-To start.
+Make sure to run   
+	Python app.py  
+To start.  
 
-Killing web app dynos while troubleshooting deployment can be achieved with
-	heroku ps:scale web=0
-This kills the web app to allow updating
-	
+log in to heroku
+
+    heroku login
+
+Check heroku apps running with    
+
+    heroku ps  
+    
+Killing web app dynos while troubleshooting deployment can be achieved with  
+
+    heroku ps:scale web=0  
+
+This kills the web app to allow updating.  
+
+
+
+
     git add .
 	git commit -a -m "updated sql"
 	git push origin master
