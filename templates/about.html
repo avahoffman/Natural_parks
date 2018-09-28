@@ -1,7 +1,6 @@
+<!-- A really basic homepage. -->
 <!DOCTYPE html>
 <html lang="en">
-<!-- How to make whole page background color?? -->
-<section class="bg-primary" id="about">
 
   <head>
 
@@ -30,7 +29,6 @@
   
   <body id="page-top">
   
-    
       <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
@@ -55,31 +53,27 @@
         </div>
       </div>
     </nav>
-    
-  <!-- Results -->
-      <section class="bg-primary" id="about">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-			<p class="text-faded mb-5">{{MESSAGE_HEAD}}</p>
-			<h1 class="section-heading text-white">{{MESSAGE_MID}}</h1><br>
-			
-            <hr class="light my-4">
-            
-            <p class="text-faded mb-5">{{MESSAGE_2}}<br></p>
-            <p class="text-faded mb-5">{{INPUT_MESSAGE}}</p>
-            
-            <a class="btn btn-light btn-xl sr-button" href= {{website}} >Visit this park's website</a>
-            <br><br> <br><br> <br><br>
-                    {{ plotdiv|safe }}
-                        <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
-    					<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
-					{{ plotscript|safe }}
-            </div>
-        </div>
+  
+      <!-- Main search -->
+
+
+    <section class="bg-dark text-white">
+      <div class="container text-center">
+        <a href="https://www.nps.gov/planyourvisit/healthy-events.htm"><h2 class="mb-4">Healthy Parks, Healthy People</h2></a>
+        <hr class="light my-4">
+        <p class="text-faded mb-5">Healthy Parks Healthy People is a global movement that harnesses the power of parks and public lands in contributing to a healthy society. It is founded on the idea that parks can be gateways to good health—providing fun, accessible places to get some physical activity and to relax and enjoy time with family and friends.</p>
+      <br><br><br><br>
+        <a href="https://e360.yale.edu/features/greenlock-a-visitor-crush-is-overwhelming-americas-national-parks"><h2 class="mb-4">How A Surge in Visitors Is Overwhelming America’s National Parks</h2></a>
+        <hr class="light my-4">
+        <p class="text-faded mb-5">The growing crowds at U.S. National Parks have become unmanageable, jeopardizing the natural experience the parks were created to provide. 
+        With attendance this summer continuing to shatter records, officials are considering limiting use of the parks in order to save them.</p>
+      <br><br><br><br>
+      <a href="https://www.npr.org/2016/03/07/466308123/long-lines-packed-campsites-and-busy-trails-our-crowded-national-parks"><h2 class="mb-4">Long Lines, Packed Campsites And Busy Trails: Our Crowded National Parks</h2></a>
+        <hr class="light my-4">
+        <p class="text-faded mb-5">"We're running out of room for people to have these wonderful experiences, and the agency and the partners of the agency are going to have to do a great job of figuring this out and probably figuring it out pretty soon"</p>
+
       </div>
     </section>
-    
 
 
     <!-- Bootstrap core JavaScript -->
@@ -95,3 +89,4 @@
     <script src="static/js/creative.min.js"></script>
 
   </body>
+</html>
