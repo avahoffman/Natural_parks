@@ -4,11 +4,11 @@ def get_parkdat(SELECTED_PARK):
     from sqlalchemy_utils import database_exists, create_database
     import psycopg2
     import pandas as pd
-    username = 'avahoffman'
-    password = 'password'
-    host = 'localhost'
+    username = 'masteruser'
+    password = 'yosemite'
+    host = 'insightinstance.ce8p69rfxkwn.us-east-2.rds.amazonaws.com'
     port = 5432
-    db_name = 'nat_parks'
+    db_name = 'nps_database'
 
     engine = create_engine( 'postgresql://{}:{}@{}:{}/{}'.format(username, 
                                                             password, 

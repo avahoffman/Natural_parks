@@ -173,19 +173,49 @@ slider2.oninput = function() {
   				
   				<p class="text-faded mb-4">How important is solitude?</p>
   				<div class="slidecontainer">
-  				<input type="range" min="1" max="10" value="5" class="slider" id="myRange" name="crowd_importance">
+  				<input type="range" min="1" max="10" value="5" class="slider" id="Range1" name="crowd_importance">
+  				<p><span id="slide1"></span>/10 (10: most important)</p>
 				</div>
 				
 				<p class="text-faded mb-4">How important is hitting your low temperature?</p>
   				<div class="slidecontainer">
-  				<input type="range" min="1" max="10" value="5" class="slider" id="myRange" name="min_importance">
+  				<input type="range" min="1" max="10" value="5" class="slider" id="Range2" name="min_importance">
+  				<p><span id="slide2"></span>/10 (10: most important)</p>
 				</div>
 				
 				<p class="text-faded mb-4">How important is hitting your max. temperature?</p>
   				<div class="slidecontainer">
-  				<input type="range" min="1" max="10" value="5" class="slider" id="myRange" name="max_importance">
+  				<input type="range" min="1" max="10" value="5" class="slider" id="Range3" name="max_importance">
+  				<p><span id="slide3"></span>/10 (10: most important)</p>
 				</div>
+<script>
+var slider3 = document.getElementById("Range1");
+var output3 = document.getElementById("slide1");
+output3.innerHTML = slider3.value;
 
+slider3.oninput = function() {
+  output3.innerHTML = this.value;
+}
+</script>
+<script>
+var slider4 = document.getElementById("Range2");
+var output4 = document.getElementById("slide2");
+output4.innerHTML = slider4.value;
+
+slider4.oninput = function() {
+  output4.innerHTML = this.value;
+}
+</script>
+<script>
+var slider5 = document.getElementById("Range3");
+var output5 = document.getElementById("slide3");
+output5.innerHTML = slider5.value;
+
+slider5.oninput = function() {
+  output5.innerHTML = this.value;
+}
+</script>
+    		
 
             
             <br><br>
