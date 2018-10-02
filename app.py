@@ -66,7 +66,7 @@ def results():
 	MESSAGE_TAIL = ""
 	MESSAGE_2 = "At this time, "+SELECTED_PARK+" should be between "+str(actual_min)+" F (minimum) and "+str(actual_max)+" F (maximum)."
 	INPUT_MESSAGE = "Your selected temperature range was "+str(SELECTED_MINTEMP)+" - "+str(SELECTED_MAXTEMP)+" F."
-	return render_template('results.html', MESSAGE_HEAD=MESSAGE_HEAD, MESSAGE_MID=MESSAGE_MID, MESSAGE_TAIL=MESSAGE_TAIL, MESSAGE_2=MESSAGE_2, INPUT_MESSAGE=INPUT_MESSAGE, plotscript = plotscript, plotdiv=plotdiv, website=website)
+	return render_template('results.html', MESSAGE_HEAD=MESSAGE_HEAD, MESSAGE_MID=MESSAGE_MID, MESSAGE_TAIL=MESSAGE_TAIL, MESSAGE_2=MESSAGE_2, INPUT_MESSAGE=INPUT_MESSAGE, website=website)
 
 if __name__ == '__main__':
     app.run()
