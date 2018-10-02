@@ -13,3 +13,7 @@ pandas==0.23.4
 DateTime==4.2
 psycopg2==2.7.5
 psycopg2-binary==2.7.5
+bokeh==0.13.0
+scipy==1.1.0
+scikit-learn==0.19.2
+sklearn==0.0
