@@ -1,6 +1,6 @@
 # essential for interface
 # https://gist.github.com/ericbarnhill/251df20105991674c701d33d65437a50
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 # essential scripts
 from get_parkdat import get_parkdat
 from do_timeseries import do_timeseries
