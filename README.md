@@ -16,9 +16,10 @@ log in to heroku
 Check heroku apps running with    
 
     heroku ps 
-    heroku ps:restart web.1
+    heroku ps:scale web=0 
     heroku ps:kill web.1
-    
+    heroku ps:restart web.1
+
 Check logs  
     
     heroku logs --tail
