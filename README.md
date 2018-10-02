@@ -33,7 +33,7 @@ This kills the web app to allow updating.
 
 
       git add .
-	git commit -a -m "updated sql"
+	git commit -a -m "logs"
 	git push origin master
 	git push web master OR git push heroku master
 
