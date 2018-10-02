@@ -18,6 +18,13 @@ import logging
 app = Flask(__name__)
 
 @app.route('/')
+def check():
+    def generate():
+      for i in range(10):
+        yield "<br/>"   # notice that we are yielding something as soon as possible
+        yield str(results(i))
+    return Response(generate(), mimetype='text/html')
+    
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     # define any variables down here to interface between the two pages, html on left and definition on right
