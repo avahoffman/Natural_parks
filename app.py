@@ -1,6 +1,6 @@
 # essential for interface
 # https://gist.github.com/ericbarnhill/251df20105991674c701d33d65437a50
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template
 # essential scripts
 from get_parkdat import get_parkdat
 from do_timeseries import do_timeseries
@@ -18,12 +18,6 @@ import logging
 app = Flask(__name__)
 
 @app.route('/')
-def check():
-    def generate():
-      for i in range(10):
-        yield "<br/>"   # notice that we are yielding something as soon as possible
-        yield str(results(i))
-    return Response(generate(), mimetype='text/html')
     
 @app.route('/index', methods=['GET', 'POST'])
 def index():
