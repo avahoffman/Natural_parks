@@ -17,8 +17,7 @@ import logging
 
 app = Flask(__name__)
 
-@app.route('/')
-    
+@app.route('/')    
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     # define any variables down here to interface between the two pages, html on left and definition on right
@@ -32,6 +31,7 @@ def about():
 @app.route('/results', methods=['GET','POST'])
 def results():
 	# user inputs
+	SELECTED_PARK = request.form['location']
 	SELECTED_MAXTEMP = int(request.form['max_temp_input'])
 	SELECTED_MINTEMP = int(request.form['min_temp_input'])
 	crowd_importance = int(request.form['crowd_importance'])
