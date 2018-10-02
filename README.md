@@ -1,5 +1,10 @@
 # National Parks
 
+
+
+
+# Helpful tips / notes  
+Helpful to me anyway.   
 Make sure to run   
 	Python app.py  
 To start.  
@@ -18,7 +23,7 @@ Check logs
     
     heroku logs --tail
     
-Killing web app dynos while troubleshooting deployment can be achieved with  
+Killing web app dynos while troubleshooting deployment can be achieved with the command below. Make sure to scale back to 1 before attempting to load the web version!  
 
     heroku ps:scale web=0  
 
