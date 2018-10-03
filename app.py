@@ -1,16 +1,11 @@
 # essential for interface
 # https://gist.github.com/ericbarnhill/251df20105991674c701d33d65437a50
 from flask import Flask, request, render_template
-# essential scripts
-from get_parkdat import get_parkdat
-from do_timeseries import do_timeseries
-#from make_yeartrendplot import make_yeartrendplot
-from euclidean_dist import euclidean_dist
 #modules
 import pandas as pd
-from datetime import datetime, timedelta
-import io
-import base64
+import datetime
+import scipy
+from sklearn import preprocessing
 import os
 import sys
 import logging
@@ -30,6 +25,7 @@ def about():
 
 @app.route('/results', methods=['GET','POST'])
 def results():
+	#
 	# user inputs
 	SELECTED_PARK = request.form['location']
 	SELECTED_MAXTEMP = int(request.form['max_temp_input'])
@@ -37,34 +33,56 @@ def results():
 	crowd_importance = int(request.form['crowd_importance'])
 	min_importance = int(request.form['min_importance'])
 	max_importance = int(request.form['max_importance'])
-	# query sql
-	NP_sub = get_parkdat(SELECTED_PARK)
-	# subset
-	NP_sub['mergedate'] = pd.to_datetime(NP_sub.assign(Day=1).loc[:, ['Year','Month','Day']])
-	# make a dictionary for website
-	site_dic = pd.Series(NP_sub.website.values,index=NP_sub.ParkName).to_dict()
+	#
+	# which model was best?
+	m = pd.read_csv("pre_validation.csv", low_memory=False)
+	sub = m[m.loc[:,('ParkName')] == SELECTED_PARK ]
+	if sub.iloc[1,6] < sub.iloc[1,7]:
+		method = "fb_prophet"
+	else:
+		method = "arima"
+	#
+	# predicted data
+	d = pd.read_csv("timeseries_predictions_dat.csv", low_memory=False)
+	if method == "fb_prophet":
+		d.rename(columns={'yhat_fb': 'pred'}, inplace=True)
+	else:
+		d.rename(columns={'yhat_arima': 'pred'}, inplace=True)
+	#
+	# website dictionary
+	site_dic = pd.Series(d.site.values,index=d.ParkName).to_dict()
 	website = site_dic[SELECTED_PARK]
-	# make the yearly trend plot
-	#app.logger.info('plotting')
-	#plotscript = []
-	#plotdiv = []
-	#plotscript, plotdiv = make_yeartrendplot(NP_sub)
-	#app.logger.info('plotting complete')
-	#
-	# prophet modeling for visitors #
-	result_vals = do_timeseries(NP_sub)
-	#
-	# calculate distances
-	dist_results = euclidean_dist(result_vals,crowd_importance,min_importance,max_importance,SELECTED_MAXTEMP,SELECTED_MINTEMP)
-	month_rec = dist_results[0]
-	year_rec = dist_results[1]
-	actual_max = round(dist_results[2],2)
-	actual_min = round(dist_results[3],2)
+	# drop 2018
+	d['date'] = d['date'].astype('datetime64[ns]')
+	result = d.drop(d[d['date'] < '2018-11-01' ].index)
+	cos_df = result.loc[:,('pred','MaxT',"MinT")]
+	crowd_imp = crowd_importance
+	crowd = 10-crowd_imp
+	min_imp = min_importance
+	max_imp = max_importance
+	least_crowded = min(result['pred'])
+	most_crowded = max(result['pred'])
+	optimal_crowd = least_crowded + (((most_crowded - least_crowded) / 10 )*crowd)
+	weights = [crowd_importance,max_importance,min_importance]
+	cos_array = cos_df.values
+	ss = preprocessing.StandardScaler().fit(cos_array)
+	features_std = ss.transform(cos_array)
+	user_input = pd.DataFrame([[ optimal_crowd, SELECTED_MAXTEMP, SELECTED_MINTEMP]], columns=('yhat_x','MaxT','MinT')) 
+	user_input = user_input.values
+	user_input = ss.transform(user_input)
+	euc_dist= scipy.spatial.distance.cdist(user_input, features_std, metric='euclidean', w=weights)[0]
+	topmatch = sorted(enumerate(euc_dist), key = lambda x: x[1], reverse = False)[0]
+	top_result = result.iloc[topmatch[0]]
+	top_result_time = top_result[3]
+	top_result_max = round(top_result[4],2)
+	top_result_min = round(top_result[5],2)
+	month_rec = top_result_time.strftime('%B')
+	year_rec = top_result_time.strftime('%Y')
 	# provide output
 	MESSAGE_HEAD = "We recommend visiting "+SELECTED_PARK+" in "
 	MESSAGE_MID = month_rec+" "+year_rec
 	MESSAGE_TAIL = ""
-	MESSAGE_2 = "At this time, "+SELECTED_PARK+" should be between "+str(actual_min)+" F (minimum) and "+str(actual_max)+" F (maximum)."
+	MESSAGE_2 = "At this time, "+SELECTED_PARK+" should be between "+str(top_result_min)+" F (minimum) and "+str(top_result_max)+" F (maximum)."
 	INPUT_MESSAGE = "Your selected temperature range was "+str(SELECTED_MINTEMP)+" - "+str(SELECTED_MAXTEMP)+" F."
 	return render_template('results.html', MESSAGE_HEAD=MESSAGE_HEAD, MESSAGE_MID=MESSAGE_MID, MESSAGE_TAIL=MESSAGE_TAIL, MESSAGE_2=MESSAGE_2, INPUT_MESSAGE=INPUT_MESSAGE, website=website)
 
