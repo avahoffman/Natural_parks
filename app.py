@@ -74,17 +74,18 @@ def results():
 	topmatch = sorted(enumerate(euc_dist), key = lambda x: x[1], reverse = False)[0]
 	top_result = result.iloc[topmatch[0]]
 	top_result_time = top_result[3]
-	top_result_max = round(top_result[4],2)
-	top_result_min = round(top_result[5],2)
+	top_result_max = round(top_result[4],1)
+	top_result_min = round(top_result[5],1)
 	month_rec = top_result_time.strftime('%B')
 	year_rec = top_result_time.strftime('%Y')
+	if year_rec == '2020':
+		year_msg = "declining"
+	else:
+		year_msg = "increasing"
+	crowd_msg = "Adjusting preferences can help make your ideal visit less crowded."
 	# provide output
-	MESSAGE_HEAD = "We recommend visiting "+SELECTED_PARK+" in "
 	MESSAGE_MID = month_rec+" "+year_rec
-	MESSAGE_TAIL = ""
-	MESSAGE_2 = "At this time, "+SELECTED_PARK+" should be between "+str(top_result_min)+" F (minimum) and "+str(top_result_max)+" F (maximum)."
-	INPUT_MESSAGE = "Your selected temperature range was "+str(SELECTED_MINTEMP)+" - "+str(SELECTED_MAXTEMP)+" F."
-	return render_template('results.html', MESSAGE_HEAD=MESSAGE_HEAD, MESSAGE_MID=MESSAGE_MID, MESSAGE_TAIL=MESSAGE_TAIL, MESSAGE_2=MESSAGE_2, INPUT_MESSAGE=INPUT_MESSAGE, website=website)
+	return render_template('results.html', MESSAGE_MID=MESSAGE_MID, website=website, year_msg=year_msg, top_result_max=top_result_max, top_result_min=top_result_min,SELECTED_PARK=SELECTED_PARK,SELECTED_MAXTEMP=SELECTED_MAXTEMP,SELECTED_MINTEMP=SELECTED_MINTEMP, crowd_msd=crowd_msg)
 
 if __name__ == '__main__':
     app.run()

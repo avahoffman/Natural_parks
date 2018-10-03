@@ -61,20 +61,18 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-			<p class="text-faded mb-5">{{MESSAGE_HEAD}}</p>
+			<p class="text-faded mb-5">We recommend visiting <b>{{SELECTED_PARK}}</b> in</p>
 			<h1 class="section-heading text-white">{{MESSAGE_MID}}</h1><br>
-			
+			<p class="text-faded mb-5">It will be <b>{{top_result_min}}&deg;</b>-<b>{{top_result_max}}&deg;F</b></p>
+            <br>
             <hr class="light my-4">
-            
-            <p class="text-faded mb-5">{{MESSAGE_2}}<br></p>
-            <p class="text-faded mb-5">{{INPUT_MESSAGE}}</p>
-            
-            <a class="btn btn-light btn-xl sr-button" href= {{website}} >Visit this park's website</a>
-            <br><br> <br><br> <br><br>
-                   <!--  {{ plotdiv|safe }}
-                        <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
-    					<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
-					{{ plotscript|safe }} -->
+            <br>
+            <p class="text-faded mb-5">Attendance at this park appears to be <b>{{year_msg}}</b>.</p>
+            <p class="text-faded mb-5">Unhappy with your temperature range? <b>Try ranking temperature higher than solitude</b>.</p>
+            <p class="text-faded mb-5">Still think the park will be crowded? <b>Try ranking solitude higher than temperature</b>.</p>
+            <br>
+            <a class="btn btn-light btn-xl sr-button" href= {{website}} >Learn more about {{SELECTED_PARK}}</a>
+
             </div>
         </div>
       </div>

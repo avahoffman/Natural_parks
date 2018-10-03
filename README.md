@@ -31,7 +31,7 @@ Check logs
     
 Push to origin and web
     
-      git add .
+    git add .
 	git commit -a -m "logs"
 	git push origin master
 	git push web master OR git push heroku master
