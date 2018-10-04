@@ -26,12 +26,6 @@
     <!-- Custom styles for this template -->
     <link href="static/css/creative.min.css" rel="stylesheet">
 
-	<style>
-	#viewplot {
-    display: none;
-	}
-	</style>
-
   </head>
   
   <body id="page-top">
@@ -82,27 +76,14 @@
         </div>
       </div>
     </section>
-    
- <center>
- <button onclick="display_plot()">See the data</button> 
- <div id="viewplot">
-{{ plotdiv|safe }}
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
-{{ plotscript|safe }}
-</div>  
- </center>
+                       
+                       <center>
+                   {{ plotdiv|safe }}
+                        <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
+    					<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
+					{{ plotscript|safe }}
+					</center>
 
-<script>
-function display_plot() {
-    var x = document.getElementById("viewplot");
-    if (x.style.display === "block") {
-        x.style.display = "none";
-    } else {
-        x.style.display = "block";
-    }
-}
-</script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="static/vendor/jquery/jquery.min.js"></script>

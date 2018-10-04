@@ -9,6 +9,8 @@ from sklearn import preprocessing
 import os
 import sys
 import logging
+#scripts
+from make_yeartrendplot import make_yeartrendplot
 
 app = Flask(__name__)
 
@@ -54,6 +56,7 @@ def results():
 	website = site_dic[SELECTED_PARK]
 	# drop 2018
 	d['date'] = d['date'].astype('datetime64[ns]')
+	d = d[d.loc[:,('ParkName')] == SELECTED_PARK ]
 	result = d.drop(d[d['date'] < '2018-11-01' ].index)
 	cos_df = result.loc[:,('pred','MaxT',"MinT")]
 	crowd_imp = crowd_importance
@@ -85,7 +88,11 @@ def results():
 	crowd_msg = "Adjusting preferences can help make your ideal visit less crowded."
 	# provide output
 	MESSAGE_MID = month_rec+" "+year_rec
-	return render_template('results.html', MESSAGE_MID=MESSAGE_MID, website=website, year_msg=year_msg, top_result_max=top_result_max, top_result_min=top_result_min,SELECTED_PARK=SELECTED_PARK,SELECTED_MAXTEMP=SELECTED_MAXTEMP,SELECTED_MINTEMP=SELECTED_MINTEMP, crowd_msd=crowd_msg)
+	# make plot
+	plotscript = []
+	plotdiv = []
+	plotscript, plotdiv = make_yeartrendplot(result)
+	return render_template('results.html', MESSAGE_MID=MESSAGE_MID, website=website, year_msg=year_msg, top_result_max=top_result_max, top_result_min=top_result_min,SELECTED_PARK=SELECTED_PARK,SELECTED_MAXTEMP=SELECTED_MAXTEMP,SELECTED_MINTEMP=SELECTED_MINTEMP, crowd_msd=crowd_msg, plotscript=plotscript, plotdiv=plotdiv)
 
 if __name__ == '__main__':
     app.run()
