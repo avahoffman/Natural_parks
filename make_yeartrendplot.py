@@ -26,7 +26,7 @@ def make_yeartrendplot(result):
 
     # def make_yeartrendplot(SELECTED_PARK):
     # plot a yearly trend
-    plot = figure(y_range=( min(visitors)-1000,max(visitors)+1000), x_axis_type='datetime', plot_width=1000, plot_height=500)
+    plot = figure(y_range=( min(visitors)-1000,max(visitors)+1000), x_axis_type='datetime', plot_width=650, plot_height=300)
     plot.xaxis.axis_label = 'Time'
     plot.yaxis.axis_label = 'Number of Visitors'
     plot.line(result['date'], visitors, color="black",legend = 'visitors', line_width=3)

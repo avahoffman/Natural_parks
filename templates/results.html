@@ -71,27 +71,28 @@
 			<h1 class="section-heading text-white">{{MESSAGE_MID}}</h1><br>
 			<p class="text-faded mb-5">It will be <b>{{top_result_min}}&deg;</b>-<b>{{top_result_max}}&deg;F</b></p>
             <br>
-            <hr class="light my-4">
-            <br>
+            <a class="btn btn-light btn-xl sr-button" href= {{website}} >Learn more about {{SELECTED_PARK}}</a>
+            <br><br><br>
+             <center>
+ 			<button class="btn btn-light btn-xl sr-button" onclick="display_plot()">See the data</button> 
+ 			<div id="viewplot">
+ 				<br>
+				{{ plotdiv|safe }}
+				<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
+				<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
+				{{ plotscript|safe }}
+			</div>  
+ 			</center>
+            <!--<hr class="light my-4"> -->
+            <br><br><br>
             <p class="text-faded mb-5">Attendance at this park appears to be <b>{{year_msg}}</b>.</p>
             <p class="text-faded mb-5">Unhappy with your temperature range? <b>Try ranking temperature higher than solitude</b>.</p>
             <p class="text-faded mb-5">Still think the park will be crowded? <b>Try ranking solitude higher than temperature</b>.</p>
-            <br>
-            <a class="btn btn-light btn-xl sr-button" href= {{website}} >Learn more about {{SELECTED_PARK}}</a>
             </div>
         </div>
       </div>
     </section>
     
- <center>
- <button onclick="display_plot()">See the data</button> 
- <div id="viewplot">
-{{ plotdiv|safe }}
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.13.0.min.js"></script>
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.13.0.min.js"></script>
-{{ plotscript|safe }}
-</div>  
- </center>
 
 <script>
 function display_plot() {
