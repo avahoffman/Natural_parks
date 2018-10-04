@@ -27,13 +27,13 @@ def make_yeartrendplot(result):
     # def make_yeartrendplot(SELECTED_PARK):
     # plot a yearly trend
     plot = figure(y_range=( min(visitors)-1000,max(visitors)+1000), x_axis_type='datetime', plot_width=650, plot_height=300)
-    plot.xaxis.axis_label = 'Time'
+    plot.xaxis.axis_label = 'Month / Year'
     plot.yaxis.axis_label = 'Number of Visitors'
     plot.line(result['date'], visitors, color="black",legend = 'visitors', line_width=3)
     plot.yaxis.ticker = breaks
     plot.yaxis.major_label_overrides = overrides
     # Create 2nd y-axis
-    plot.extra_y_ranges['temp'] = Range1d(start=0, end=100)
+    plot.extra_y_ranges['temp'] = Range1d(start=0, end=110)
     plot.add_layout(LinearAxis(y_range_name='temp', axis_label='Temperature (°F)'), 'right')
     plot.line( x = result['date'], y = result['MaxT'], legend = 'max temp.', y_range_name = 'temp', color = 'orangered', line_width=3, line_dash='dotted')
     plot.line( x = result['date'], y = result['MinT'], legend = 'min temp.', y_range_name = 'temp', color = 'royalblue', line_width=3, line_dash='dotted')
