@@ -91,7 +91,7 @@ def results():
 	# make plot
 	plotscript = []
 	plotdiv = []
-	plotscript, plotdiv = make_yeartrendplot(result)
+	plotscript, plotdiv = make_yeartrendplot(result, top_result_time)
 	return render_template('results.html', MESSAGE_MID=MESSAGE_MID, website=website, year_msg=year_msg, top_result_max=top_result_max, top_result_min=top_result_min,SELECTED_PARK=SELECTED_PARK,SELECTED_MAXTEMP=SELECTED_MAXTEMP,SELECTED_MINTEMP=SELECTED_MINTEMP, crowd_msd=crowd_msg, plotscript=plotscript, plotdiv=plotdiv)
 
 if __name__ == '__main__':

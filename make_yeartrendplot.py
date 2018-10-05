@@ -1,4 +1,4 @@
-def make_yeartrendplot(result):
+def make_yeartrendplot(result, top_result_time):
     #import matplotlib.pyplot as plt
     import numpy as np
     from bokeh.plotting import figure
@@ -22,6 +22,11 @@ def make_yeartrendplot(result):
     elif max(visitors) <= 50000:
         breaks = [1000, 5000, 10000, 25000, 50000]
         overrides = {1000: '1k', 5000: '5k', 10000: '10k', 25000: '25k', 50000: '50k'}
+    
+    dates_in_dt = np.array(result['date'], dtype=np.datetime64)
+    top_in_dt = np.array(top_result_time, dtype=np.datetime64)
+    # index top result for plotting
+    ti=np.where(dates_in_dt == top_in_dt)[0]
 
 
     # def make_yeartrendplot(SELECTED_PARK):
@@ -38,6 +43,7 @@ def make_yeartrendplot(result):
     plot.line( x = result['date'], y = result['MaxT'], legend = 'max temp.', y_range_name = 'temp', color = 'orangered', line_width=3, line_dash='dotted')
     plot.line( x = result['date'], y = result['MinT'], legend = 'min temp.', y_range_name = 'temp', color = 'royalblue', line_width=3, line_dash='dotted')
     plot.toolbar_location = 'above'
+    plot.quad(top=[max(visitors)+1000], bottom=[min(visitors)-1000], left=[dates_in_dt[ti][0]], right=[dates_in_dt[ti+1][0]], color='#22A784', fill_alpha = 0.2)
     plot.legend.border_line_width = 2
     plot.legend.border_line_color = "black"
     plot.legend.border_line_alpha = 0.5
