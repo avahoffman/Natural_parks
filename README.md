@@ -1,7 +1,4 @@
 # National Parks  
-Well, I named the repository Natural Parks, oops.
-
-
 
 # Helpful tips / notes  
 Helpful to me anyway.   
